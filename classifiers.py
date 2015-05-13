@@ -17,14 +17,16 @@ def reg_classifier(data,labels):
     
     return w
 
-def load_data(filename):
+def load_data(filename,clip=-1):
     """
     Reads filename, returns matrix of data with bias column
     and a vector of labels
     """
     data = pd.read_csv(filename,header=0)
     labels = np.array(data['sentiment'])
-    data = data.drop('id',axis=1)
+    data = data.drop(['id','sentiment'],axis=1)
     data['bias']=np.ones(data.shape[0])
+
     
-    return np.array(data), labels
+    
+    return np.array(data[:clip]), labels[:clip]
