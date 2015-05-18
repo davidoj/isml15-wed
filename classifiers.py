@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 
 
-def reg_classifier(data,labels):
+def reg_classifier_train(data,labels):
     """
     Calculates a vector of weights for classifying data
     Args: data - MxN matrix (including bias)
@@ -17,6 +17,28 @@ def reg_classifier(data,labels):
     
     return w
 
+def reg_classifier_predict(data,weights=None):
+    """
+    Predicts sentiment of movie reviews based on word vectors
+    Args: data - MxN matrix
+    Returns a length M vector of predicted sentiments
+    """
+    if weights == None:
+        weights = pd.read_csv('lin_reg_weights.csv',header=None,index_col=None)
+        weights = np.array(weights)[0]
+
+    return data.dot(weights)
+
+def cheating_classifier(data):
+    """
+    Predicts sentiment of movie reviews quickly, perfectly and without training
+    using super secret classification techology
+    Args: data - MxN matrix
+    Returns a length M vector of predicted sentiments
+    """
+
+    return data[:,3910]
+
 def load_data(filename,clip=-1):
     """
     Reads filename, returns matrix of data with bias column
@@ -29,4 +51,4 @@ def load_data(filename,clip=-1):
 
     
     
-    return np.array(data[:clip]), labels[:clip]
+    return np.array(data), labels
